@@ -2,19 +2,20 @@ import { CommonConstants } from "../../common/constants/CommonConstants"
 import BindSheetHeader from "./BindSheetHeader"
 import ItemCard from "./ItemCard"
 import NumberKeyboards from "./NumberKeyboards"
-
+import RecordItem from '../../viewmodel/RecordItem'
 @Component
 struct BindSheetBuilder {
   @State amount: number = 1
   @State value: string = ''
-  @Link showPanel: boolean
+  @Link showPanel: boolean;
+  @Link paramsData:RecordItem;
 
   build() {
     Column() {
       // 1.顶部日期时间选择
       BindSheetHeader()
       //2.记录项卡片
-      ItemCard({ amount: this.amount })
+      ItemCard({ amount: this.amount,item:this.paramsData })
       // 3.数字键盘
       NumberKeyboards({ amount: this.amount, value: this.value })
 
@@ -31,8 +32,7 @@ struct BindSheetBuilder {
           .type(ButtonType.Normal)
           .borderRadius(6)
           .onClick(() => {
-            //1.持久化保存
-            // 确保 this.item 不是 null
+            console.info('+++data',JSON.stringify(this.paramsData))
 
 
           })
@@ -40,6 +40,7 @@ struct BindSheetBuilder {
     }
     .width('100%')
   }
+
 }
 
 export default BindSheetBuilder

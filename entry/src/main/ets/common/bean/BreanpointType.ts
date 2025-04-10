@@ -12,6 +12,6 @@ export default class BreakpointType<T> {
   }
 
   getValue(breakpoint: string): T {
-    return JSON.parse(JSON.stringify(this.options)[breakpoint])
+    return this.options[breakpoint]
   }
 }

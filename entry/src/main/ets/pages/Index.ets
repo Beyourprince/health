@@ -30,9 +30,11 @@ struct Index {
   }
 
   selectColor(index: number) {
-    return this.currentIndex === index ? $r('app.color.light_primary_color') : $r('app.color.gray')
+    return this.currentIndex === index ? $r( 'app.color.light_primary_color') : $r('app.color.gray')
   }
-
+  isSm() {
+    return this.currentBreakpoint == BreakpointConstants.SM
+  }
   getBarPosition(): BarPosition {
 
     return new BreakpointType({
@@ -44,7 +46,7 @@ struct Index {
   }
 
   build() {
-    Tabs({ barPosition: this.getBarPosition() }) {
+    Tabs({ barPosition: BreakpointConstants.BAR_POSITION.getValue(this.currentBreakpoint)}) {
       TabContent() {
         RecordIndex()
       }.tabBar(this.TabBarBuilder($r('app.media.ic_calendar'), 0, $r('app.string.tab_record')))
@@ -62,10 +64,6 @@ struct Index {
     .onChange((index) => {
       this.currentIndex = index
     })
-    .vertical(new BreakpointType({
-      sm: false,
-      md: true,
-      lg: true
-    }).getValue(this.currentBreakpoint))
+    .vertical(!this.isSm())
   }
 }
